@@ -727,3 +727,46 @@ Agora leia os cinco materiais, confira o estado do repositório e produza soment
 **Controle de versão:** um commit na branch `revisao-mvp` com `spec.md`, `prompts.md`, `backlog_v2.md` e `roteiro_apresentacao_mvp.md`. Sem push, merge ou PR; a `main` permanece no commit `468ab41`. O hash do commit não é inserido neste arquivo porque o arquivo faz parte do próprio commit.
 
 **Responsabilidade autoral:** Mateus Pinheiro Silva Rodrigues decidiu os cortes e as quatro escolhas e assumiu as justificativas. O Claude analisou, propôs, redigiu e conferiu. O produto continua sendo especificação em Markdown.
+
+---
+
+## Interação 08 — revisão de consistência após a publicação da branch
+
+**Data:** 05/11/2026
+**Ferramenta/modelo:** Claude Code (extensão VS Code) / Claude Fable 5.1
+**Modo:** edição de arquivos, após publicação da branch `revisao-mvp` (commit `0ce6bcd`) autorizada pelo aluno.
+
+**Prompt enviado (literal):**
+
+```text
+A branch revisao-mvp foi publicada corretamente.
+
+Antes de atualizarmos a main, faça uma última revisão de consistência.
+
+Encontrei um erro na seção 12 do spec.md: a associação das quatro escolhas a DEC17, DEC19, DEC22 e DEC26 está incorreta. DEC22 trata de listas e histórico.
+
+As associações corretas são:
+- Q1: DEC17 — momento da perda.
+- Q2: DEC26 — modelo com seis entidades.
+- Q3: DEC19 — indisponibilidade.
+- Q4: escolha dos arquivos do commit, registrada no prompts.md, sem DEC própria.
+
+Corrija essa inconsistência.
+
+Depois, confira novamente a rastreabilidade entre RN, HU, DEC, critérios de aceite, casos de borda e estados, considerando o feedback do professor.
+
+Corrija somente problemas objetivos encontrados. Não amplie o escopo nem acrescente novas funcionalidades.
+
+Faça um novo commit e push exclusivamente na branch revisao-mvp. Não altere a main.
+
+Ao finalizar, informe o novo commit e apresente um resumo das correções.
+```
+
+**Correções realizadas (sem mudança de escopo ou de regra):**
+- Seção 12: as escolhas Q1–Q3 passam a apontar DEC17, DEC26 e DEC19; Q4 é registrada como escolha de entrega sem decisão própria. O erro foi encontrado pelo aluno.
+- Tabela 9.1: removidas três associações em que o caso de borda não citava nenhuma RN da história (borda 25 em HU07, borda 8 em HU08, borda 10 em HU12); os casos continuam ligados às histórias cujas regras citam (HU05 e HU01). Verificação nova adicionada ao script documental: toda borda listada em uma HU deve citar ao menos uma RN dessa HU.
+- Seção 6: cinco cenários que já testavam limites foram rotulados "Cenário limite" (HU03 telefone 9/11 dígitos; HU06 data fora do intervalo; HU07 último componente; HU08 perda no dia do vencimento; HU09 renovação ou parcial). Nenhum cenário foi acrescentado ou alterado em conteúdo.
+
+**Verificações repetidas:** IDs sequenciais; referências RN/HU/DEC/RNF válidas em glossário, atores, transições, status do objeto e modelo; toda RN com decisão de origem existente; toda RN em ao menos uma HU; toda borda listada em 9.1 e citando RN da HU correspondente; todas as datas dos cenários existem no calendário; 49 RN, 13 HU, 78 cenários, 51 bordas, 27 DEC, 9 RNF.
+
+**Controle de versão:** novo commit na branch `revisao-mvp`, publicado com push; `main` inalterada em `468ab41`.

@@ -260,7 +260,7 @@ Convenções: cada cenário é independente, com o dono autenticado e registros 
   Dado que estou na tela de novo contato  
   Quando informo nome "Ana Souza" e deixo telefone e observação vazios  
   Então o contato é salvo e aparece na lista como "Ana Souza"
-- **Cenário: telefone inválido e válido**  
+- **Cenário limite: telefone com 9 e com 11 dígitos**  
   Dado que informei nome "Ana Souza"  
   Quando salvo com telefone "859999999" e, em cenário independente, "85999990000"  
   Então o primeiro recebe "Telefone deve ter 10 ou 11 dígitos" sem salvar e o segundo é salvo
@@ -362,7 +362,7 @@ Convenções: cada cenário é independente, com o dono autenticado e registros 
   Dado vencimento 17/11/2026 e hoje 21/11/2026  
   Quando registro devolução com data "17/11/2026"  
   Então o empréstimo fica Devolvido "no prazo"
-- **Cenário: data fora do intervalo**  
+- **Cenário limite: data fora do intervalo**  
   Dado saída 10/11/2026 e hoje 15/11/2026  
   Quando informo data de devolução "09/11/2026" e, em cenário independente, "16/11/2026"  
   Então vejo "A data de devolução deve estar entre a saída e hoje" e nada é salvo
@@ -396,7 +396,7 @@ Convenções: cada cenário é independente, com o dono autenticado e registros 
   Dado que "Console" já foi recebido em 13/11/2026 e hoje é 14/11/2026  
   Quando envio parcial marcando apenas "Console"  
   Então vejo "Marque ao menos um novo componente recebido" e nada é salvo
-- **Cenário: último componente vira integral**  
+- **Cenário limite: último componente vira integral**  
   Dado parcial de "Console" e "Controle 1" em 13/11/2026, vencimento 17/11/2026 e hoje 19/11/2026  
   Quando marco "Controle 2" recebido em "19/11/2026" com conservação "bom" e dano "nenhum"  
   Então o empréstimo fica Devolvido "com atraso de 2 dias", os três componentes aparecem recebidos com suas datas e o objeto volta a "Disponível"
@@ -418,7 +418,7 @@ Convenções: cada cenário é independente, com o dono autenticado e registros 
   Dado vencimento 17/11/2026 e hoje 18/11/2026  
   Quando marco perda com motivo "não devolução"  
   Então o empréstimo fica Perdido, o objeto fica "Indisponível" com motivo "Perdido em 18/11/2026" e aparece em Encerrados
-- **Cenário: perda em dia**  
+- **Cenário limite: perda no dia do vencimento**  
   Dado vencimento 17/11/2026 e hoje 17/11/2026  
   Quando tento marcar perda  
   Então vejo "Perda só pode ser registrada após o vencimento" e nada muda
@@ -452,7 +452,7 @@ Convenções: cada cenário é independente, com o dono autenticado e registros 
   Dado Ativo sem renovação nem parcial  
   Quando aciono "Cancelar" com motivo "Registro duplicado"  
   Então o empréstimo fica Cancelado, o objeto volta a "Disponível" com a mesma conservação e o registro aparece em Encerrados sem classificação de atraso
-- **Cenário: com renovação ou parcial**  
+- **Cenário limite: com renovação ou parcial**  
   Dado um Ativo com 1 renovação e, em cenário independente, um conjunto Ativo com parcial  
   Quando tento cancelar  
   Então vejo "Empréstimo com renovação ou devolução parcial não pode ser cancelado" e nada muda
@@ -826,12 +826,12 @@ Cada caso aponta a RN que enuncia o comportamento.
 | HU04 | RN17, RN20, RN21, RN22, RN23, RN24 | Inexistente → Ativo | 13, 16, 17, 18, 19, 20 |
 | HU05 | RN31, RN32, RN33, RN34 | Ativo → Ativo | 23, 24, 25 |
 | HU06 | RN35, RN36, RN37, RN38, RN46 | Ativo → Devolvido | 26, 27, 28, 29, 30, 41, 42 |
-| HU07 | RN39, RN40, RN41 | Ativo parcial → Ativo / Devolvido | 25, 31, 32, 33, 51 |
-| HU08 | RN12, RN42, RN43, RN44 | Ativo → Perdido → Perdido recuperado | 8, 34, 35, 36, 37, 38 |
+| HU07 | RN39, RN40, RN41 | Ativo parcial → Ativo / Devolvido | 31, 32, 33, 51 |
+| HU08 | RN12, RN42, RN43, RN44 | Ativo → Perdido → Perdido recuperado | 34, 35, 36, 37, 38 |
 | HU09 | RN45, RN46 | Ativo → Cancelado | 39, 40, 41, 42 |
 | HU10 | RN25, RN26, RN27, RN45, RN47, RN49 | Consulta de todos os estados | 21, 22, 43, 44 |
 | HU11 | RN28, RN29, RN30 | Avisos derivados | 19, 45, 46, 47 |
-| HU12 | RN19, RN48, RN49 | Histórico | 10, 15, 44 |
+| HU12 | RN19, RN48, RN49 | Histórico | 15, 44 |
 | HU13 | RN01, RN02, RN03, RN04 | Conta e sessão | 48, 49, 50 |
 
 Cobertura das nove funcionalidades do enunciado: 1 objetos → HU01, HU02; 2 contatos → HU03; 3 empréstimo → HU04; 4 renovação → HU05; 5 devolução com estado → HU06, HU07; 6 perda → HU08; 7 listas → HU10; 8 avisos → HU11; 9 histórico → HU12. Toda RN01–RN49 está ligada a pelo menos uma HU.
@@ -890,4 +890,4 @@ O aluno **Mateus Pinheiro Silva Rodrigues** assumiu as decisões abaixo como esc
 
 ## 12. Questões em aberto
 
-Nenhuma. As quatro escolhas que dependiam do aluno nesta revisão (momento da perda, modelo sem trilha de eventos, campo único de indisponibilidade com liberação livre, conteúdo do commit) foram decididas em 05/11/2026 e constam de DEC17, DEC19, DEC22 e DEC26. Os limites da v1 estão na seção 2.3 e não são decisões pendentes. Esta entrega contém exclusivamente a especificação e o registro de prompts; nenhum teste de aplicativo foi executado.
+Nenhuma. As quatro escolhas que dependiam do aluno nesta revisão (momento da perda, modelo sem trilha de eventos, campo único de indisponibilidade com liberação livre, conteúdo do commit) foram decididas em 05/11/2026: as três primeiras constam de DEC17 (momento da perda), DEC26 (modelo com seis entidades) e DEC19 (indisponibilidade); a quarta é escolha de entrega registrada em `prompts.md`, sem decisão própria. Os limites da v1 estão na seção 2.3 e não são decisões pendentes. Esta entrega contém exclusivamente a especificação e o registro de prompts; nenhum teste de aplicativo foi executado.
