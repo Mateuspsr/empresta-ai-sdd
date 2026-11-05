@@ -1,9 +1,9 @@
 # Registro de prompts usados com IA — Empresta Aí
 
 **Aluno:** Mateus Pinheiro Silva Rodrigues  
-**Atualização:** 03/11/2026  
-**Ferramentas:** Claude Code (histórico de 30/10/2026 preservado abaixo) e Codex/OpenAI (sessão atual de revisão e entrega, referida pelo aluno como ChatGPT Work).  
-**Status:** registro final das interações conhecidas; decisões DEC01–DEC57 aprovadas pelo aluno. O aplicativo não foi implementado.
+**Atualização:** 05/11/2026
+**Ferramentas:** Claude Code (interações 01–03 em 30/10/2026 e 06–07 em 05/11/2026), Codex/OpenAI (interações 04–05 em 03/11/2026, referida pelo aluno como ChatGPT Work).
+**Status:** registro das interações conhecidas. A versão de 03/11/2026 (DEC01–DEC57 antigas) está preservada no commit `468ab41`; a revisão MVP de 05/11/2026 renumerou as decisões como DEC01–DEC27 em `spec.md`. O aplicativo não foi implementado.
 
 ## Proveniência e limitações do histórico
 
@@ -14,6 +14,7 @@
 - O nome e o status do cabeçalho foram atualizados. Afirmações como “ainda não foi executada” nas interações históricas descrevem o estado em 30/10/2026. A revisão posterior está registrada nas interações 04–05.
 - Não se atribuem a Claude Code as correções, novas propostas DEC50–DEC57 ou auditorias executadas no Codex. A aprovação autoral das escolhas é do aluno, não da IA.
 - Marcadores de preenchimento e referências a rascunho que aparecem dentro de prompts literais são citações históricas do pedido, não campos pendentes deste documento.
+- As interações 06–07 (05/11/2026) ocorreram no Claude Code, extensão VS Code, modelo Claude Fable 5.1 (`claude-fable-5-1`), identificação informada pelo próprio ambiente. Nada delas é atribuído ao Codex, e nenhuma correção das interações 04–05 é atribuída ao Claude. Os números DEC citados nas interações 00–05 referem-se à numeração antiga (DEC01–DEC57); a spec MVP usa DEC01–DEC27 novas, com coluna de origem.
 
 ---
 
@@ -579,3 +580,150 @@ Ao terminar, forneça os links dos arquivos, o commit final, os resultados da au
 **Publicação e apresentação:** esta entrada registra o trabalho editorial e as verificações anteriores à publicação. O commit final, a conferência de igualdade entre GitHub e arquivos locais, o ZIP, a versão PDF auxiliar e o guia de apresentação são identificados no relatório de entrega. Não se insere o hash do próprio commit dentro do arquivo que o constitui. A publicação na main está autorizada pelo pedido do aluno após a aprovação acima.
 
 **Responsabilidade autoral:** Mateus Pinheiro Silva Rodrigues assumiu expressamente as escolhas de produto e suas justificativas. A IA auxiliou na análise, escrita, crítica e conferência. O produto acadêmico continua sendo documentação em Markdown.
+
+---
+
+## Interação 06 — análise da proposta do professor e plano de corte para MVP
+
+**Data:** 05/11/2026
+**Ferramenta/modelo:** Claude Code (extensão VS Code) / Claude Fable 5.1
+**Modo:** Plan (somente leitura), com a habilidade `brainstorming` do Superpowers invocada pelo aluno (`/superpowers:brainstorming`) para análise de escopo, conforme o pedido.
+**Objetivo:** ler o enunciado, o feedback do professor, o material sobre MVP e a spec atual; produzir matriz manter/simplificar/adiar/retirar, auditoria de rastreabilidade e um único bloco de escolhas para aprovação, sem editar arquivos.
+
+**Contexto do pedido:** o aluno clonou `Mateuspsr/empresta-ai-sdd` na branch `revisao-mvp` (commit `468ab41`), extraiu o kit de revisão (`LEIA_PRIMEIRO.md`, `PROMPT_CLAUDE_MVP.md`, `CHECKLIST_ACEITE_MVP.md`, `referencias/`) e invocou a habilidade de brainstorming. O conteúdo do pedido é o arquivo `PROMPT_CLAUDE_MVP.md`, reproduzido literalmente:
+
+````text
+# PROMPT PARA CLAUDE CODE — REVISAR O EMPRESTA AÍ PARA MVP
+
+Você é um analista sênior de requisitos e revisor independente especializado em SDD e produtos mínimos viáveis. Seu trabalho **não é programar** o Empresta Aí: é transformar a especificação acadêmica atual numa **versão MVP enxuta, completa, consistente e defensável perante o professor**.
+
+## FONTES, ORDEM E AMBIENTE
+
+Você está na raiz de um clone do repositório `Mateuspsr/empresta-ai-sdd` numa branch de revisão, inicialmente criado a partir do commit `468ab4185cda23c6c84373bb07f448b8e78dc458` (verifique o estado atual e não presuma que continua igual). Leia integralmente:
+
+1. `referencias/Enunciado_original_Empresta_Ai.pdf` — **fonte obrigatória primária**, seis páginas;
+2. `referencias/Feedback_Professor_MVP.md` — crítica, proposta e novo direcionamento do professor;
+3. `referencias/A_importancia_do_MVP.pdf` — material de aula sobre valor, validação e ciclo construir–medir–aprender;
+4. `spec.md` e `prompts.md` atuais;
+5. `CLAUDE.md`, se existir e estiver consistente com as exigências anteriores (priorize o enunciado e este pedido em caso de conflito).
+
+Se o PDF não puder ser lido, interrompa apenas o suficiente para informar o impedimento e peça o mínimo necessário; nunca finja que leu.
+
+Use a habilidade de **brainstorming** do Superpowers, se instalada, apenas para analisar produto/escopo. Evite os fluxos de implementação de código ou a geração de planos de desenvolvimento.
+
+## OBJETIVO
+
+O professor elogiou a precisão, mas criticou a desproporção: a versão atual alcançou 159 RNs, 20 HUs, 112 bordas, 57 decisões e muitas decisões técnicas em regras de negócio. Ele solicitou uma nova SPEC ajustada ao **MVP**, com o menor conjunto suficiente de regras para as **9 funcionalidades obrigatórias**, e uma distinção clara entre núcleo v1, limites conhecidos e backlog v2.
+
+O MVP não pode ser um protótipo malfeito: precisa entregar o ciclo essencial cadastrar → emprestar → acompanhar → renovar quando possível → registrar devolução/perda → consultar, com comportamento inequívoco. Explique brevemente qual hipótese de valor será testada quando o produto for construído e quais indicadores/feedback poderiam ser observados no futuro, sem inventar medições reais nesta atividade documental. Não implemente o sistema, não crie frontend/backend, API, SQL, testes executáveis ou aplicativo funcional.
+
+## ETAPA A — LEITURA E PLANO DE CORTE (MODO PLAN)
+
+Faça primeiro:
+1. Compare o enunciado, a sugestão do professor e a SPEC atual; identifique os 9 itens obrigatórios, 4 exclusões de escopo e todas as perguntas que continuam exigindo resposta.
+2. Apresente matriz resumida **manter / simplificar / adiar para v2 / retirar**, justificando valor, complexidade e impacto em requisito obrigatório.
+3. Siga como linha-base as recomendações do professor em `Feedback_Professor_MVP.md`, mas sinalize trade-offs relevantes. Considere avisos **derivados no painel**, danos reduzidos a nenhum/leve/grave, perda após vencimento sem espera de 30 dias, remoção simples de dados com limitação explícita, sem contestação/retificação formal, sem bloqueio de contato, sem mecanismo sofisticado de idempotência, sem subsistema de avisos persistidos. Se qualquer corte inviabilizar requisito explícito do enunciado, proponha o menor ajuste para preservá-lo.
+4. Aponte os erros confirmados de rastreabilidade: caso de borda 9 cita RN15 onde RN150 detalhava conservação; caso 39 omite RN154 sobre liberação. Faça auditoria completa, não corrija apenas dois pontos.
+5. Identifique que a proposta fala em '11 HUs', mas enumera 12; a quantidade é ilustrativa. Meta orientativa: **aproximadamente 35–55 RN, 11–13 HU e 25–40 casos de borda**, se isso satisfizer realmente o escopo. Não force cotas, preserve os critérios de testabilidade e rastreabilidade.
+6. Apresente no máximo um bloco concentrado de escolhas materiais que dependam de mim, com recomendação clara. Não reabra escolhas já definidas no enunciado nem faça dezenas de perguntas individuais.
+
+**Neste primeiro momento:** não edite arquivos nem publique no Git. Retorne um plano de corte e as escolhas que preciso aprovar.
+
+## ETAPA B — REDAÇÃO APÓS APROVAÇÃO (MODO ACCEPT EDITS)
+
+Quando eu aprovar o plano, proceda até concluir os arquivos, sem ficar pedindo confirmação para cada detalhe editorial.
+
+Reescreva `spec.md` integralmente para o **MVP**, preservando as 12 seções oficiais exatamente nesta ordem:
+1. Visão;
+2. Escopo (dentro, fora, limites e backlog v2 referido claramente);
+3. Glossário;
+4. Atores e permissões;
+5. Regras de negócio;
+6. Histórias de usuário e aceite Dado/Quando/Então;
+7. Estados e transições;
+8. Modelo de dados conceitual;
+9. Casos de borda e erros;
+10. Requisitos não funcionais verificáveis;
+11. Decisões e premissas com alternativas e justificativas;
+12. Questões em aberto (idealmente nenhuma, após minha aprovação).
+
+**Qualidade obrigatória:**
+- Cada RN é curta, atômica, verificável e tem identificador sequencial novo RN01... sem 'buracos' nem números herdados. Não empilhe referências encadeadas como substituto de descrever o comportamento.
+- Cada HU descreve objetivo e benefício; relaciona-se às suas RNs; tem critérios de aceite Dado/Quando/Então em cenário de sucesso, erro e limite quando pertinente.
+- Cada caso de borda possui comportamento esperado e aponta a RN correta.
+- Glossário com distinção entre estado persistido e classificação derivada, sem termos contraditórios.
+- Estados, datas, permissões, dados, avisos e históricos consistentes. Não inventar envio de SMS/e-mail, chat, pagamentos, marketplace ou geolocalização.
+- A solução de avisos derivados deve satisfazer efetivamente 'avisar o dono sobre prazos próximos e atrasos' sem jobs/agendamento/persistência desnecessários; definir o que aparece e quando.
+- A exclusão/arquivamento de objetos e contatos com histórico e o pedido de remoção de dados precisam de comportamento explícito; **não afirmar que remoção parcial dos identificadores garante anonimização jurídica ou pleno atendimento à LGPD**. Minimize os campos livres e registre a limitação de textos históricos.
+- Fuso America/Fortaleza é uma **premissa/limitação da v1**, explicitada em escopo, decisões e/ou RNF; explicar como dias e atraso são calculados sem sobrecarregar RNs com detalhes de infraestrutura.
+- Concorrência básica, segurança, transações, hashes, validação técnica, limites técnicos e acessibilidade em RNF ou ADR opcional, evitando transformá-los em dezenas de RN.
+- Evitar regras desnecessárias sobre janela de retificação, expurgo específico de backup, versionamento otimista, confirmação técnica detalhada e múltiplas causas automáticas de indisponibilidade.
+- O modelo de dados deve comportar os requisitos obrigatórios e a devolução parcial. Não reduzir artificialmente a 6 entidades se isso impossibilitar o comportamento; justificar eventual diferença.
+- Manter decisões justificadas com rastreabilidade; criar IDs novos e coerentes DEC-MVP01... ou DEC01... se todos forem renumerados corretamente. O histórico da versão anterior já existe no Git; não inventar que as decisões antigas foram todas mantidas na v1.
+- Não marcar como 'implementado' nada que seja apenas especificado; não declarar testes executados num aplicativo inexistente.
+
+Crie `backlog_v2.md` **curto**, com prioridade, valor, motivação e itens adiados: bloqueio; contestação/retificação; avisos persistidos; privacidade mais completa; idempotência avançada se necessária; fusos por conta. Pode incluir decisões técnicas futuras, sem transformá-las em promessas da v1.
+
+Atualize `prompts.md` adicionando o(s) prompt(s) real(is) desta revisão, a decisão de cortes, as contribuições reais do Claude e minha aprovação efetiva. **Preserve o histórico verdadeiro de Claude Code e Codex/OpenAI**, sem inventar mensagens ou atribuir a uma ferramenta o trabalho de outra. O professor elogiou precisamente o registro honesto do uso de IA.
+
+## ETAPA C — AUDITORIA FINAL OBRIGATÓRIA
+
+Audite a nova versão pelos seis critérios e pesos do professor:
+- 25% regras de negócio;
+- 25% critérios de aceite;
+- 15% casos de borda;
+- 10% estados e modelo de dados;
+- 15% rastreabilidade e clareza;
+- 10% decisões e uso da IA.
+
+Execute verificações documentais: contagem e sequência de IDs, referências RN/HU/DEC válidas, HUs ligadas a regras, casos ligados a RNs, ausência de placeholders, coerência do estado Ativo/Devolvido/Perdido/Cancelado, cobertura das nove funcionalidades e resposta explícita às perguntas do PDF.
+
+Releia a nova SPEC como 'implementador cético': liste o que exigiria adivinhação. Corrija o que puder com base nas decisões aprovadas e registre como limitação ou questão aberta apenas aquilo que realmente exigir nova escolha minha.
+
+Fique atento à crítica de legibilidade: a redução da spec não pode apenas converter 159 regras em poucas regras enormes. O texto precisa ficar **muito mais curto e fácil de seguir**.
+
+## ETAPA D — CONTROLE DE VERSÃO E ENTREGA
+
+Faça as edições na branch de revisão aberta, preservando o histórico da `main`. Ao concluir, apresente diff/resumo, contagens finais e um quadro 'antes → depois' com os cortes e seus motivos.
+
+Não force-push. Não reescreva a história. Não altere a `main` nem abra PR sem minha autorização final. Depois de aprovado, crie um commit na branch e oriente como fazer merge/push com segurança, ou execute as operações que eu autorizar. Não declare GitHub publicado se não verificar o resultado.
+
+Entregue o `spec.md` revisado, `prompts.md` atualizado, `backlog_v2.md` auxiliar e um roteiro curto para apresentar em **3–5 minutos**: problema, o que permaneceu, o que foi cortado, por que os avisos foram simplificados e como a nova SPEC continua testável.
+
+## COMEÇO
+
+Agora leia os cinco materiais, confira o estado do repositório e produza somente a **ETAPA A**. Quando eu aprovar o plano, siga automaticamente B, C e D, respeitando o controle de versão.
+````
+
+**Resposta e resultado:** a renderização dos PDFs não estava disponível no ambiente; o Claude extraiu o texto das seis páginas do enunciado e das cinco páginas do material de MVP com um script Python de biblioteca padrão, gravado fora do repositório, e leu integralmente `spec.md` (1.677 linhas) e `prompts.md`. Produziu, no arquivo de plano do Claude Code: confirmação das 9 funcionalidades, 4 exclusões e 7 blocos de perguntas do enunciado; matriz de corte por área (conta, objeto, contato, empréstimo, atraso, avisos, renovação, devolução, parcial, perda, cancelamento, listas, transversais) com justificativa; seis trade-offs da linha-base do professor; auditoria de rastreabilidade da spec de 03/11 (verificação mecânica: nenhum ID inexistente; verificação semântica: bordas 9, 13, 15, 18, 38 e 39 e a linha "editar conservação" da tabela 7.4 citavam RN que remetiam ao comportamento em vez de enunciá-lo; 31 RN citavam outras RN); estrutura proposta da nova spec (13 HU, cerca de 45–50 RN, 6 entidades); e a observação de que a proposta do professor fala em "11 HUs" mas enumera 12.
+**Bloco de escolhas apresentado ao aluno (recomendação em primeiro lugar):** Q1 momento da perda (1º dia de atraso / qualquer momento Ativo / manter 30 dias); Q2 modelo com 6 entidades sem Evento ou 7 com Evento; Q3 campo único de indisponibilidade com liberação livre ou perdido liberado só por recuperação; Q4 conteúdo do commit (só entregáveis ou também referências).
+**Sugestões da IA aceitas:** nenhuma nesta interação (apenas análise e plano).
+**Modificações em `spec.md`:** nenhuma.
+
+---
+
+## Interação 07 — aprovação do plano de corte, redação da spec MVP, auditoria e commit
+
+**Data:** 05/11/2026
+**Ferramenta/modelo:** Claude Code (extensão VS Code) / Claude Fable 5.1
+**Modo:** Plan → aprovação → edição de arquivos.
+**Objetivo:** executar as Etapas B, C e D do pedido após a aprovação do aluno.
+
+**Aprovação do aluno (por diálogo de escolhas do Claude Code e aprovação do plano):** Q1 = "1º dia de atraso (Recommended)"; Q2 = "6 entidades, sem Evento (Recommended)"; Q3 = "Sim, liberação livre (Recommended)"; Q4 = "Só os entregáveis (Recommended)". Em seguida o aluno aprovou o plano de corte completo. As quatro escolhas são decisões de produto do aluno, registradas em `spec.md` como DEC17, DEC26 e DEC19 e no escopo do commit; as alternativas rejeitadas constam da coluna "Alternativas consideradas".
+
+**Alterações efetivamente realizadas pelo Claude, assumidas pelo aluno:**
+- `spec.md` reescrito integralmente para o MVP, preservando as 12 seções oficiais na ordem: 49 RN (RN01–RN49, numeração nova, sem buracos), 13 HU com 78 cenários Dado/Quando/Então, tabela de transições com recusas, catálogo de mensagens, 6 entidades, 51 casos de borda, 9 RNF, 27 decisões (DEC01–DEC27 novas, com coluna "Origem" apontando as DEC antigas mantidas, simplificadas ou substituídas) e seção 12 sem pendências. 894 linhas (antes: 1.677). Hipótese de valor e indicadores futuros na seção 1, sem medições inventadas. Fuso America/Fortaleza declarado como premissa (2.3, DEC09, RNF05). Remoção de dados descrita com limitação explícita, sem promessa jurídica (RN19, DEC23).
+- `backlog_v2.md` criado: 10 itens adiados com prioridade, valor, motivação e gatilho.
+- `roteiro_apresentacao_mvp.md` criado: roteiro de 3–5 minutos com perguntas prováveis.
+- `prompts.md`: cabeçalho atualizado e estas duas interações acrescentadas; interações 00–05 preservadas sem alteração de conteúdo.
+- Arquivos do kit e `referencias/` não foram adicionados ao Git, conforme Q4.
+
+**Verificações mecânicas executadas (script documental sobre `spec.md`):** RN01–RN49, HU01–HU13, DEC01–DEC27, RNF01–RNF09 e bordas 1–51 sequenciais; nenhuma referência RN/HU/DEC/RNF inexistente (as DEC28–DEC57 citadas na coluna "Origem" são as antigas, por design); toda RN ligada a pelo menos uma HU; toda borda com RN; lista de RN de cada HU igual à tabela 9.1; 78 cenários, todos com Dado, Quando e Então; mensagens entre aspas dos cenários presentes no catálogo 7.3; nenhum placeholder; 12 seções na ordem oficial.
+
+**Leitura como implementador cético (feita pelo próprio Claude, não por terceiro):** itens que exigiriam adivinhação e foram corrigidos na própria redação: RN27 sem HU (ligada à HU10); mensagem de recuperação em empréstimo não perdido ausente do catálogo; critério de empate nas ordenações (declarado livre em DEC22); ordem dos itens no painel (RN28); edição de nome/telefone/observação do contato (RN15); substituição do motivo de indisponibilidade quando já havia um (RN12); cronologia entre devoluções parciais (RN39 e borda 51); formato de e-mail válido (RNF09). Permanecem como limitações declaradas, não como lacunas: liberação manual de objeto perdido (2.3, DEC19), textos históricos não saneados (RN19), fuso fixo (DEC09).
+
+**Auditoria pela rubrica (evidência documental, sem nota):** regras de negócio 25% — 49 RN atômicas respondendo aos 7 blocos de perguntas (seção 5; cobertura em 9.1); critérios de aceite 25% — 78 cenários com datas, valores e mensagens literais, incluindo erro e limite em todas as HU (seção 6); casos de borda 15% — 51 casos com comportamento e RN que enuncia a regra (seção 9), corrigindo estruturalmente os desvios das bordas 9 e 39 da versão anterior; estados e modelo 10% — 4 estados persistidos, classificações derivadas separadas, transições com recusas e 6 entidades coerentes (seções 7 e 8); rastreabilidade e clareza 15% — glossário com estado × classificação, HU↔RN↔borda em 9.1, RN sem referências encadeadas como substituto de descrição; decisões e uso de IA 10% — 27 decisões com alternativas, justificativa e origem, e este registro. Nenhum teste de aplicativo foi executado.
+
+**Controle de versão:** um commit na branch `revisao-mvp` com `spec.md`, `prompts.md`, `backlog_v2.md` e `roteiro_apresentacao_mvp.md`. Sem push, merge ou PR; a `main` permanece no commit `468ab41`. O hash do commit não é inserido neste arquivo porque o arquivo faz parte do próprio commit.
+
+**Responsabilidade autoral:** Mateus Pinheiro Silva Rodrigues decidiu os cortes e as quatro escolhas e assumiu as justificativas. O Claude analisou, propôs, redigiu e conferiu. O produto continua sendo especificação em Markdown.
